@@ -1,0 +1,160 @@
+<head>
+    <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+    <script>
+        function submitForm(name){
+            let last = document.getElementById("last-selected");
+            last.value = name;
+            document.getElementById("artist-picker").submit();
+        }
+
+        function deselect(){
+            var fldSet = document.getElementById("cboxfield");
+            var chkBoxes = fldSet.getElementsByTagName('input'); 
+            for(var i=0;i<chkBoxes.length;i++){ 
+                if(chkBoxes[i].type == 'checkbox'){
+                    chkBoxes[i].checked = false;
+                }
+            }
+        }
+
+        function hideshow(){
+            var cbox = document.getElementById("cboxfield");
+            cbox.hidden = !cbox.hidden;
+
+            var button = document.getElementById("hider");
+            if (button.value == "Hide Artists"){
+                button.value = "Show Artists";
+            }else{
+                button.value = "Hide Artists";
+            }
+        }
+
+        /* Credit Calumah from StackOverflow */
+        function download_table_as_csv(table_id, separator = ',') {
+            // Select rows from table_id
+            var rows = document.querySelectorAll('table#' + table_id + ' tr');
+            // Construct csv
+            var csv = [];
+            for (var i = 0; i < rows.length; i++) {
+                var row = [], cols = rows[i].querySelectorAll('td, th');
+                for (var j = 0; j < cols.length; j++) {
+                    // Clean innertext to remove multiple spaces and jumpline (break csv)
+                    var data = cols[j].innerText.replace(/(\r\n|\n|\r)/gm, '').replace(/(\s\s)/gm, ' ')
+                    // Escape double-quote with double-double-quote (see https://stackoverflow.com/questions/17808511/properly-escape-a-double-quote-in-csv)
+                    data = data.replace(/"/g, '""');
+                    // Push escaped string
+                    row.push('"' + data + '"');
+                }
+                csv.push(row.join(separator));
+            }
+            var csv_string = csv.join('\n');
+            // Download it
+            var filename = 'RIJF2024.csv';
+            var link = document.createElement('a');
+            link.style.display = 'none';
+            link.setAttribute('target', '_blank');
+            link.setAttribute('href', 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv_string));
+            link.setAttribute('download', filename);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    </script>
+</head>
+<header>
+    <h1>RIJF 2024 SCHEDULE CREATOR</h1>
+    <div>Automatically create RIJF 2024 schedules of all the artists you want to see!</div>
+    <div class="caveat">It may take a few seconds to load larger schedules. Schedule does not include 12:00 shows at the library.</div>
+</header>
+<main>
+    <div>
+        <form id="artist-picker" action="{{url_for('base')}}" method="post">
+            <input type="hidden" id="last-selected" name="last-selected" value="TEST">
+            <fieldset id="cboxfield" class="selector">
+                <legend>Select Artists to Add to Schedule</legend>
+                    {% for ast in artists %}
+                        <span>
+                            <input type="checkbox" id="{{ast['name']}}" name="{{ast['name']}}" value="{{ast['name']}}" {{"checked" if ast['name'] in selected}} onclick="submitForm('{{ast['name']}}')">
+                            <label for="{{ast['name']}}" title="{{ast['name']}}">{{ast['name']}}</label>
+                        </span>
+                    {% endfor %}
+            </fieldset>
+            <br>
+                {# <input class="control-buttons" type="submit"> #}
+                <input class="control-buttons" type="button" value="Uncheck All" onclick="deselect()">
+                <input class="control-buttons" type="button" value="Export CSV" onclick="download_table_as_csv('schedule')">
+                <input id="hider" class="control-buttons" type="button" value="Hide Artists" onclick="hideshow()">
+        </form>
+    </div>
+    {% if festival is not none %}
+        {% if festival %}
+            <div>
+                <table id="schedule">
+                    <tr>
+                        <th></th>
+                        <th>6-21</th>
+                        <th>6-22</th>
+                        <th>6-23</th>
+                        <th>6-24</th>
+                        <th>6-25</th>
+                        <th>6-26</th>
+                        <th>6-27</th>
+                        <th>6-28</th>
+                        <th>6-29</th>
+                    </tr>
+                    {% for i in range(0,11) %}
+                    <tr>
+                        <th>{{i+1}}:00 PM</th>
+                        {% for day in festival %}
+                            {% if day[4*i+0] is not none %}
+                                <td style="background-color: lightyellow">{{day[4*i+0]}}</td>
+                            {% else %}
+                                <td></td>
+                            {% endif %}
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <th>{{i+1}}:15 PM</th>
+                        {% for day in festival %}
+                            {% if day[4*i+1] is not none %}
+                                <td style="background-color: lightyellow">{{day[4*i+1]}}</td>
+                            {% else %}
+                                <td></td>
+                            {% endif %}
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <th>{{i+1}}:30 PM</th>
+                        {% for day in festival %}
+                            {% if day[4*i+2] is not none %}
+                                <td style="background-color: lightyellow">{{day[4*i+2]}}</td>
+                            {% else %}
+                                <td></td>
+                            {% endif %}
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <th>{{i+1}}:45 PM</th>
+                        {% for day in festival %}
+                            {% if day[4*i+3] is not none %}
+                                <td style="background-color: lightyellow">{{day[4*i+3]}}</td>
+                            {% else %}
+                                <td></td>
+                            {% endif %}
+                        {% endfor %}
+                    </tr>
+                    {% endfor %}
+                </table>
+
+            </div>
+        {% else %}
+            <div class="warning">Select Artists above to create a Schedule!</div>
+        {% endif %}
+    {% else %}
+        {% if conflicts|length != 0%}
+            <div class="warning">This Schedule is not possible: <span style="color:red;">{{failed}}</span> conflicts with <span style="color:red;">{{', '.join(conflicts)}}</span>. However, it is likely still possible to see all of these artists. Try removing different artists!</div>
+        {% else %}
+            <div class="warning">This Schedule is not possible. Try removing a few artists!</div>
+        {% endif %}
+    {% endif %}
+</main>

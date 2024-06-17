@@ -1,0 +1,69 @@
+/* HEADER CSS */
+header div {
+	margin-left: 1%;;
+}
+
+header div.caveat {
+	margin-bottom: 1%;
+	font-style: italic;
+}
+
+/* SCHEDULE FIELD CSS */
+div.warning {
+	color: steelblue;
+	font-size: 20px;
+}
+
+table {
+	border-collapse: collapse;
+    font-family: Tahoma, Geneva, sans-serif;
+}
+table td {
+	padding: 15px;
+    width: 200px;
+    /* height: 50px; */
+}
+table thead td {
+	background-color: #54585d;
+	color: #ffffff;
+	font-weight: bold;
+	font-size: 13px;
+	border: 1px solid #54585d;
+}
+table tbody td {
+	color: #636363;
+	border: 1px solid #dddfe1;
+}
+table tbody tr {
+	background-color: #f9fafb;
+}
+table tbody tr:nth-child(odd) {
+	background-color: #ffffff;
+}
+
+/* CHECKBOX FIELD CSS */
+fieldset.selector {
+	background-color: rgb(200, 226, 247);
+}
+
+fieldset.selector span{
+    display: inline-block;
+    width: 12%;
+    height: 20px;
+    overflow: hidden;
+}
+
+#artist-picker span:hover{
+	background-color: lightyellow;
+}
+
+.control-buttons {
+	height: 30px;
+	width: 100px;
+	background-color: lightsteelblue;
+	font-size: 15px;
+}
+
+.control-buttons:hover{
+	background-color: rgb(206, 213, 224);
+}
