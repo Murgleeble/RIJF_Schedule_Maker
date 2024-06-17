@@ -1,7 +1,6 @@
 """ Main module contains the Backtracking DFS  """
 
 import json
-import pandas as pd
 from copy import deepcopy
 
 # This is a list of artists for testing purposes. Known conflicts are Gwilym Simcock
