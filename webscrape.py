@@ -50,8 +50,8 @@ def main():
             print("Error parsing artist data, skipping...")
             print("\t\t", str(c))
                     
-    with open("artists.json", "w") as f:
-        json.dump(sorted(ARTISTS, key=lambda x: x["name"].lower().replace("The ", "")), f)
+    with open("./sources/artists.json", "w") as f:
+        json.dump(sorted(ARTISTS, key=lambda x: x["name"].lower().replace("the ", "")), f)
 
 if __name__ == "__main__":
     main()
