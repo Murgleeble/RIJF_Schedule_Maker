@@ -1,69 +1,267 @@
-/* HEADER CSS */
+/* RIJF-inspired HEADER */
+body {
+    font-family: 'Sofia Sans', 'Tahoma', Geneva, sans-serif;
+}
+header {
+    background: linear-gradient(90deg, #1a1a1a 0%, #2c3e50 100%);
+    color: #fff;
+    padding: 18px 0 10px 0;
+    border-bottom: 4px solid #e74c3c;
+    box-shadow: 0 2px 8px rgba(44,62,80,0.10);
+}
+.color1 {
+	color: white;
+}
+.color2 {
+	color: #ec2f37;
+}
+.color3 {
+	color: #439db5;
+}
+.color4 {
+	color: #b2ae37;
+}
+
+.subtitle { 
+	font-size: 1rem; 
+	color: #888; 
+	margin-top: 0.2em; 
+	margin-bottom: 0.8em; 
+	font-style: italic; 
+	letter-spacing: 0.5px; 
+}
+
 header div {
-	margin-left: 1%;;
+    margin-left: 2%;
+}
+a {
+	color: #7bcaff; /* light blue, change as desired */
+	text-decoration: underline;
 }
 
 header div.caveat {
-	margin-bottom: 1%;
-	font-style: italic;
+    margin-bottom: 5px;
+    font-style: italic;
+    color: #f7ca18;
 }
 
 /* SCHEDULE FIELD CSS */
 div.warning {
-	color: steelblue;
-	font-size: 20px;
+    color: #e74c3c;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+table {
+    width: 100%;
+    max-width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(44,62,80,0.10);
+    margin-bottom: 20px;
+    border-radius: 10px;
+    overflow: hidden;
 }
 
-table {
-	border-collapse: collapse;
-    font-family: Tahoma, Geneva, sans-serif;
-}
 table td {
-	padding: 15px;
     width: 200px;
-    /* height: 50px; */
+    padding: 8px 6px;
+    font-size: 15px;
 }
 table thead td {
-	background-color: #54585d;
-	color: #ffffff;
-	font-weight: bold;
-	font-size: 13px;
-	border: 1px solid #54585d;
+    background: linear-gradient(90deg, #2c3e50 0%, #34495e 100%);
+    color: #fff;
+    font-weight: bold;
+    font-size: 14px;
+    border: 1px solid #2c3e50;
+    letter-spacing: 1px;
+    text-transform: uppercase;
 }
 table tbody td {
-	color: #636363;
-	border: 1px solid #dddfe1;
+    color: #222;
+    border: 1px solid #e3e6ea;
+    background: #f9fafb;
 }
 table tbody tr {
-	background-color: #f9fafb;
+    background-color: #f9fafb;
+    transition: background 0.2s;
 }
 table tbody tr:nth-child(odd) {
-	background-color: #ffffff;
+    background-color: #f4f8fb;
+}
+table tbody tr:hover {
+    background: #eaf6fb;
+}
+
+/* Hide content but show outline for hidden rows */
+tr.hidden-row {
+    height: 1px !important;
+    min-height: 1px !important;
+    max-height: 1px !important;
+    border: 1px dashed #bbb;
+    background: #f5f5f5 !important;
+    overflow: hidden;
+}
+tr.hidden-row td, tr.hidden-row th {
+    height: 1px !important;
+    min-height: 1px !important;
+    max-height: 1px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    line-height: 1px !important;
+    color: transparent !important;
+    background: transparent !important;
+    border: none !important;
+    overflow: hidden !important;
+}
+
+/* CELL STYLES */
+.cell {
+    display: flex;
+    height: 75px;
+}
+.cell div {
+    outline: 1px solid #b2bec3;
+    background-color: #fdf6e3;
+    font-size: 13px;
+    height: 100%;
+    overflow-y: auto;
+	overflow-x: hidden;
+    padding: 2px 4px;
+    border-radius: 4px;
+}
+
+/* Custom small scrollbar for .cell div */
+.cell div::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+}
+.cell div::-webkit-scrollbar-thumb {
+    background: #b2bec3;
+    border-radius: 4px;
+}
+.cell div::-webkit-scrollbar-track {
+    background: #fdf6e3;
+    border-radius: 4px;
 }
 
 /* CHECKBOX FIELD CSS */
 fieldset.selector {
-	background-color: rgb(200, 226, 247);
+    background: white;
+    border: 2px solid #c0392b;
+    border-radius: 8px;
+    padding: 5px 12px;
+    box-shadow: 0 2px 8px rgba(44,62,80,0.10);
 }
-
-fieldset.selector span{
+fieldset.selector span {
     display: inline-block;
     width: 12%;
     height: 20px;
     overflow: hidden;
+    font-size: 14px;
+    color: #1a1a1a;
+}
+#artist-picker span:hover {
+    background-color: #c0392b;
+    color: #fff;
+    cursor: pointer;
+}
+/* Highlight checked checkboxes and their labels in a softer RIJF red */
+fieldset.selector input[type="checkbox"]:checked + label {
+    color: #222;
+    border-radius: 4px;
+	font-weight: bold;
+    transition: background 0.2s, color 0.2s;
+}
+fieldset.selector input[type="checkbox"]:focus + label {
+    outline: 2px solid #c0392b;
+    outline-offset: 2px;
 }
 
-#artist-picker span:hover{
-	background-color: lightyellow;
+/* Custom checkbox styling */
+fieldset.selector input[type="checkbox"] {
+    accent-color: #c0392b;
+    width: 16px;
+    height: 16px;
+    vertical-align: middle;
+    margin-right: 4px;
+    border-radius: 4px;
+    border: 1.5px solid #c0392b;
+    background: #fff;
+    transition: box-shadow 0.2s;
+}
+fieldset.selector input[type="checkbox"]:focus {
+    box-shadow: 0 0 0 2px #f7ca18;
+    outline: none;
 }
 
+/* BUTTONS */
 .control-buttons {
-	height: 30px;
-	width: 100px;
-	background-color: lightsteelblue;
-	font-size: 15px;
+    height: 30px;
+    width: 120px;
+    background: linear-gradient(90deg, #1a1a1a 0%, #2c3e50 100%);
+    font-size: 15px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    margin-right: 8px;
+    transition: background 0.2s, color 0.2s;
+    font-weight: 600;
+    box-shadow: 0 1px 4px rgba(44,62,80,0.08);
 }
-
-.control-buttons:hover{
-	background-color: rgb(206, 213, 224);
+.export {
+    height: 30px;
+    width: 120px;
+    background: linear-gradient(90deg, #e74c3c 0%, #f7ca18 100%);
+    color: white;
+    font-size: 15px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 5px;
+    transition: background 0.2s, color 0.2s;
+    font-weight: 600;
+    box-shadow: 0 1px 4px rgba(44,62,80,0.08);
+}
+.control-buttons:hover {
+    background: #f7ca18;
+    cursor: pointer;
+    color: #222;
+}
+.export:hover {
+    background: #e74c3c;
+    cursor: pointer;
+    color: #fff;
+}
+.max-overlap {
+    height: 30px;
+    width: 120px;
+    background: linear-gradient(90deg, #fff5f3 0%, #fbeee6 100%);
+    font-size: 16px;
+    border-radius: 8px;
+    color: #1a1a1a;
+    margin-right: 10px;
+    border: 2px solid #e74c3c;
+    transition: background 0.2s, border 0.2s, box-shadow 0.2s;
+    font-weight: 600;
+    outline: none;
+    padding-left: 10px;
+    box-shadow: 0 1px 4px rgba(44,62,80,0.08);
+	margin-bottom: 10px;
+}
+#toTopBtn {
+	display:none;
+	position:fixed;
+	bottom:32px;
+	right:32px;
+	z-index:2000;
+	background:linear-gradient(90deg,#1a1a1a 0%,#2c3e50 100%);
+	color:#fff;
+	border:none;
+	border-radius:50%;
+	width:48px;
+	height:48px;
+	box-shadow:0 2px 8px rgba(44,62,80,0.18);
+	font-size:1.7em;
+	cursor:pointer;
+	transition:background 0.2s;
 }
