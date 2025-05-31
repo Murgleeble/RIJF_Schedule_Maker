@@ -55,8 +55,7 @@ def base():
         choices.remove("shrunk")
 
         shrink = request.form.get("shrunk") == "True"
-        print(shrink)
-
+        
         max_overlap = int(request.form.get("max-overlap", 1))
         #Retrieve the times that the last artists selected plays
         conflictTimes = []
